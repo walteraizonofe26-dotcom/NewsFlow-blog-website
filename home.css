@@ -1,0 +1,228 @@
+/* =========================================
+   GLOBAL STYLES (Colors & Typography)
+   ========================================= */
+:root {
+    --primary-blue: #0056b3;
+    --dark-blue: #003d80;
+    --text-dark: #333333;
+    --text-light: #666666;
+    --bg-light: #f8f9fa;
+    --white: #ffffff;
+    --border-color: #e0e0e0;
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --transition: all 0.3s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    line-height: 1.6;
+    color: var(--text-dark);
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* =========================================
+   HEADER & FOOTER (Global Components)
+   ========================================= */
+.site-header {
+    background: var(--white);
+    border-bottom: 1px solid var(--border-color);
+    padding: 1rem 5%;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.main-navigation ul {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+}
+
+.main-navigation a:hover {
+    color: var(--primary-blue);
+}
+
+.site-footer {
+    background: #1a1a1a;
+    color: var(--white);
+    padding: 4rem 5% 2rem;
+    margin-top: 3rem;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 3rem;
+}
+
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid #333;
+    color: #888;
+}
+
+/* =========================================
+   HOMEPAGE SPECIFIC: HERO SECTION
+   ========================================= */
+.hero-section {
+    background: linear-gradient(135deg, #004a99 0%, #0066cc 100%);
+    color: var(--white);
+    padding: 6rem 5%;
+    text-align: center;
+}
+
+.hero-headline {
+    font-size: 2.8rem;
+    margin-bottom: 1.5rem;
+}
+
+.hero-subtext {
+    font-size: 1.2rem;
+    max-width: 700px;
+    margin: 0 auto 2rem;
+    opacity: 0.9;
+}
+
+.btn-primary {
+    display: inline-block;
+    background: var(--white);
+    color: var(--primary-blue);
+    padding: 0.8rem 2rem;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: var(--transition);
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow);
+}
+
+/* =========================================
+   HOMEPAGE SPECIFIC: FEATURED GRID
+   ========================================= */
+.featured-news {
+    max-width: 1200px;
+    margin: 4rem auto;
+    padding: 0 5%;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    font-size: 2rem;
+}
+
+.articles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.article-card {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: var(--transition);
+}
+
+.article-card:hover {
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    transform: translateY(-5px);
+}
+
+.card-content {
+    padding: 1.5rem;
+}
+
+.read-more-link {
+    display: inline-block;
+    margin-top: 1rem;
+    color: var(--primary-blue);
+    font-weight: bold;
+}
+
+/* =========================================
+   HOMEPAGE SPECIFIC: CATEGORIES & LATEST
+   ========================================= */
+.categories-section {
+    background: var(--bg-light);
+    padding: 4rem 5%;
+    text-align: center;
+}
+
+.category-list {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    list-style: none;
+}
+
+.category-item a {
+    padding: 0.6rem 1.5rem;
+    background: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: 25px;
+}
+
+.category-item a:hover {
+    background: var(--primary-blue);
+    color: var(--white);
+    border-color: var(--primary-blue);
+}
+
+.latest-news-preview {
+    max-width: 800px;
+    margin: 4rem auto;
+    padding: 0 5%;
+}
+
+.recent-item {
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.article-meta {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    text-transform: uppercase;
+}
+
+.view-all-container {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+/* =========================================
+   RESPONSIVE DESIGN
+   ========================================= */
+@media (max-width: 768px) {
+    .hero-headline { font-size: 2rem; }
+    .header-container { flex-direction: column; gap: 1rem; }
+    .footer-container { flex-direction: column; }
+}

@@ -1,0 +1,122 @@
+/* GLOBAL & HEADER/FOOTER (Shared with Home) */
+:root { --blue: #0056b3; --gray: #f8f9fa;
+     --text: #333; 
+     --border: #e0e0e0; 
+    }
+
+body { font-family: sans-serif; 
+    color: var(--text);
+    margin: 0;
+     }
+
+a { text-decoration: none;
+    color: inherit;
+ }
+
+.site-header { padding: 1rem 5%;
+     border-bottom: 1px solid var(--border); 
+     display: flex;
+     justify-content: center; 
+    }
+
+.header-container { width: 100%; max-width: 1200px;
+     display: flex; 
+     justify-content: space-between;
+     }
+
+.main-navigation ul { display: flex;
+     gap: 20px; list-style: none; 
+    }
+
+/* FEEDS SPECIFIC */
+.feeds-header { text-align: center;
+     padding: 3rem 5%;
+      background: var(--gray);
+     }
+
+.search-bar input { padding: 10px; 
+    width: 300px;
+     border: 1px solid var(--border); 
+     border-radius: 4px; 
+    }
+
+.search-bar button { padding: 10px 20px; 
+    background: var(--blue); 
+    color: white; 
+    border: none; 
+    border-radius: 4px; 
+    cursor: pointer;
+ }
+
+.category-filters ul { display: flex; 
+    justify-content: center; 
+    gap: 10px;
+     list-style: none; 
+     margin-top: 20px;
+     }
+
+.filter-link { padding: 8px 16px;
+     border-radius: 20px;
+      background: white;
+       border: 1px solid var(--border);
+     }
+
+.filter-link.active { background: var(--blue); 
+    color: white; }
+
+.articles-container { display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+     gap: 2rem;
+      padding: 3rem 5%; 
+      max-width: 1200px;
+      margin: auto; 
+    }
+
+.feed-card { border: 1px solid var(--border);
+     border-radius: 8px; 
+     overflow: hidden; 
+     transition: 0.3s; 
+    }
+
+.feed-card:hover { transform: translateY(-5px);
+     box-shadow: 0 5px 15px rgba(0,0,0,0.1); 
+    }
+
+    .card-body { 
+        padding: 1.5rem;
+     }
+
+.category-label { font-size: 0.7rem; color: var(--blue); 
+    font-weight: bold;
+     text-transform: uppercase; 
+    }
+
+.read-more { display: block;
+     margin-top: 1rem; 
+     color: var(--blue); 
+     font-weight: bold;
+     }
+
+.pagination { display: flex;
+     justify-content: center;
+      gap: 10px; 
+      list-style: none; 
+      margin: 3rem 0;
+     }
+
+.page-number.active { font-weight: bold;
+     text-decoration: underline; 
+     color: var(--blue); 
+    }
+
+.site-footer { background: #1a1a1a; 
+    color: white; 
+    padding: 3rem 5%; 
+}
+.footer-bottom {
+    text-align: center;
+    margin-top: 3rem;
+    padding-top: 1rem;
+    border-top: 1px solid #333;
+    color: #888;
+}
