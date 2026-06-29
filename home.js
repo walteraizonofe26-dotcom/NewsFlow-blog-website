@@ -128,3 +128,19 @@ function renderArticles(articles){
     }
 }
 renderArticles(fakeNews)
+
+let categorybuttons = document.querySelectorAll(".category-btn");
+categorybuttons.forEach(button => {
+    button.addEventListener("click", function(event){
+        const clickedButton = event.target;
+        categoryName = clickedButton.dataset.category;
+        console.log("clicked category:", categoryName)
+        if (categoryName === "All"){
+            return fakeNews
+        }
+        else if (clickedButton === categoryName){
+            return fakeNews.filter(news => news.categoryName)
+        }
+        renderArticles(fakeNews)
+    })
+})
