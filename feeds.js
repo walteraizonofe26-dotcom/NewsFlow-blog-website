@@ -9,7 +9,7 @@ const fakeNews = [
         image: "https://picsum.photos/id/1015/800/600",
         date: "June 25, 2026",
         author: "Walter Okon",
-        
+        button: "Read More"
     },
     {
         id: 2,
@@ -19,7 +19,7 @@ const fakeNews = [
         image: "https://picsum.photos/id/1020/800/600",
         date: "June 24, 2026",
         author: "Walter Okon",
-        
+        button: "Read More"
     },
     {
         id: 3,
@@ -29,7 +29,7 @@ const fakeNews = [
         image: "https://picsum.photos/id/201/800/600",
         date: "June 23, 2026",
         author: "Walter Okon",
-        
+        button: "Read More"
     },
     {
         id: 4,
@@ -39,7 +39,7 @@ const fakeNews = [
         image: "https://picsum.photos/id/133/800/600",
         date: "June 22, 2026",
         author: "Walter Okon",
-        
+        button: "Read More"
     },
     {
         id: 5,
@@ -49,7 +49,7 @@ const fakeNews = [
         image: "https://picsum.photos/id/180/800/600",
         date: "June 21, 2026",
         author: "Walter Okon",
-       
+        button: "Read More"
     },
     {
         id: 6,
@@ -59,7 +59,7 @@ const fakeNews = [
         image: "https://picsum.photos/id/201/800/600",
         date: "June 20, 2026",
         author: "Walter Okon",
-        
+        button: "Read More"
     },
     {
         id: 7,
@@ -69,7 +69,7 @@ const fakeNews = [
         image: "https://picsum.photos/id/251/800/600",
         date: "June 19, 2026",
         author: "Walter Okon",
-        
+        button: "Read More"
     },
     {
         id: 8,
@@ -78,7 +78,8 @@ const fakeNews = [
         category: "Tech",
         image: "https://picsum.photos/id/180/800/600",
         date: "June 18, 2026",
-        
+        author: "Walter Okon",
+        button: "Read More"
     },
     {
         id: 9,
@@ -88,7 +89,7 @@ const fakeNews = [
         image: "https://picsum.photos/id/1015/800/600",
         date: "June 17, 2026",
         author: "Walter Okon",
-        
+        button: "Read More"
     },
     {
         id: 10,
@@ -98,73 +99,67 @@ const fakeNews = [
         image: "https://picsum.photos/id/201/800/600",
         date: "June 16, 2026",
         author: "Walter Okon",
-        
+        button: "Read More"
     }
 ];
 
+
+
 function renderArticles(articles){
-    let grid = document.querySelector(".articles-grid");
-    grid.innerHTML = "";    
+    let articlesContainer = document.querySelector(".articles-container");
+    articlesContainer.innerHTML = "";    
 
     for (let i =0; i<articles.length; i++){
         let articleData = articles[i];
 
         const article = document.createElement("article");
-        article.classList.add("article-card");
+        article.classList.add("feed-card");
 
         const image = document.createElement("img");
         image.src = articleData.image;
         image.alt = articleData.title
+        image.classList.add("card-image");
         
         const articleTitle = document.createElement("h3");
-        articleTitle.classList.add("article-card");
+        articleTitle.classList.add("card-title");
         articleTitle.textContent = articleData.title;
 
         const articleDescription = document.createElement("p")
-        articleDescription.classList.add("article-card");
+        articleDescription.classList.add("card-summary");
         articleDescription.textContent = articleData.description;
 
         const articleCategory = document.createElement("span")
-        articleCategory.classList.add("article-card");
+        articleCategory.classList.add("category-label");
         articleCategory.textContent = articleData.category
 
-        const readMoreButton = document.createElement("button")
-        readMoreButton.classList.add("read-more-button");
-        readMoreButton.textContent = "Read More";
+        const articleButton = document.createElement("button")
+        articleButton.classList.add("article-button");
+        articleButton.textContent = articleData.button
 
-        readMoreButton.addEventListener("click", ()=> {
-            localStorage.setItem("selectedArticle", JSON.stringify(articleData));
-            window.location.href = "articles.html"
-        })
 
         article.appendChild(image);
         article.appendChild(articleTitle)
         article.appendChild(articleDescription)
         article.appendChild(articleCategory)
-        article.appendChild(readMoreButton)
+        article.appendChild(articleButton)
+        
 
-        grid.appendChild(article)
+        articlesContainer.appendChild(article)
     }
 }
 renderArticles(fakeNews)
 
-let categorybuttons = document.querySelectorAll(".category-btn");
+let searchInput = document.getElementById("news-search");
+searchInput.addEventListener("input", function(){
+        const searchTerm = searchInput.value.trim().toLowerCase();
 
-categorybuttons.forEach(button => {
-    button.addEventListener("click", function(event){
-        const clickedButton = event.target;
-        const categoryName = clickedButton.dataset.category;
+        let filteredNews = fakeNews;
 
-        console.log("clicked category:", categoryName);
-
-        let filteredArticles = fakeNews
-
-        if (categoryName !== "All"){
-            filteredArticles = fakeNews.filter(news => news.category === categoryName)
+        if (searchTerm !== ''){
+            filteredNews = fakeNews.filter(article =>
+                article.category.toLowerCase().includes(searchTerm) ||
+                article.description.toLowerCase().includes(searchTerm)
+            )
         }
-    
-        renderArticles(filteredArticles)
-    })
+        renderArticles(filteredNews)
 })
-
-
