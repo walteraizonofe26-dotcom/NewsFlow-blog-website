@@ -93,30 +93,33 @@ const fakeNews = [
     }
 ];
 
+
+
 function renderArticles(articles){
-    let grid = document.querySelector(".articles-grid");
-    grid.innerHTML = "";    
+    let articlesContainer = document.querySelector(".articles-container");
+    articlesContainer.innerHTML = "";    
 
     for (let i =0; i<articles.length; i++){
         let articleData = articles[i];
 
         const article = document.createElement("article");
-        article.classList.add("article-card");
+        article.classList.add("feed-card");
 
         const image = document.createElement("img");
         image.src = articleData.image;
         image.alt = articleData.title
+        image.classList.add("card-image");
         
         const articleTitle = document.createElement("h3");
-        articleTitle.classList.add("article-card");
+        articleTitle.classList.add("card-title");
         articleTitle.textContent = articleData.title;
 
         const articleDescription = document.createElement("p")
-        articleDescription.classList.add("article-card");
+        articleDescription.classList.add("card-summary");
         articleDescription.textContent = articleData.description;
 
         const articleCategory = document.createElement("span")
-        articleCategory.classList.add("article-card");
+        articleCategory.classList.add("category-label");
         articleCategory.textContent = articleData.category
 
         article.appendChild(image);
@@ -124,26 +127,22 @@ function renderArticles(articles){
         article.appendChild(articleDescription)
         article.appendChild(articleCategory)
 
-        grid.appendChild(article)
+        articlesContainer.appendChild(article)
     }
 }
 renderArticles(fakeNews)
 
-let categorybuttons = document.querySelectorAll(".category-btn");
+let searchInput = document.getElementById("news-search");
+searchInput.addEventListener("input", function(){
+        const searchTerm = searchInput.value.trim().toLowerCase();
 
-categorybuttons.forEach(button => {
-    button.addEventListener("click", function(event){
-        const clickedButton = event.target;
-        const categoryName = clickedButton.dataset.category;
+        let filteredNews = fakeNews;
 
-        console.log("clicked category:", categoryName);
-
-        let filteredArticles = fakeNews
-
-        if (categoryName !== "All"){
-            filteredArticles = fakeNews.filter(news => news.category === categoryName)
+        if (searchTerm !== ''){
+            filteredNews = fakeNews.filter(article =>
+                article.category.toLowerCase().includes(searchTerm) ||
+                article.description.toLowerCase().includes(searchTerm)
+            )
         }
-    
-        renderArticles(filteredArticles)
-    })
+        renderArticles(filteredNews)
 })
