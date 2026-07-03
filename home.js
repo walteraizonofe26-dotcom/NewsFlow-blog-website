@@ -1,170 +1,110 @@
+//For learning purposes, the NewsData.io API key is currently stored directly in the JavaScript file instead of an environment (.env) file.
+//I understand that exposing API keys in client-side code is not a recommended practice for production applications. In a real-world project, 
+//I would store sensitive API keys securely using environment variables and a backend server or serverless function.
 
-const fakeNews = [
+const API_KEY = "pub_37cb3f9d1ece4e1da0c15c0d9eda6a24";
 
-    {
-        id: 1,
-        title: "Messi Scores Brace as Inter Miami Crushes Orlando City",
-        description: "Lionel Messi delivered another masterclass performance, scoring twice to lead Inter Miami to a convincing victory in the Leagues Cup.",
-        category: "Football",
-        image: "https://picsum.photos/id/1015/800/600",
-        date: "June 25, 2026",
-        author: "Walter Okon",
-        
-    },
-    {
-        id: 2,
-        title: "Arsenal Complete Record Signing of Brazilian Starlet",
-        description: "Arsenal have made a huge statement in the transfer market by signing one of Brazil's most promising young talents.",
-        category: "Football",
-        image: "https://picsum.photos/id/1020/800/600",
-        date: "June 24, 2026",
-        author: "Walter Okon",
-        
-    },
-    {
-        id: 3,
-        title: "How AI is Revolutionizing Modern Football Tactics",
-        description: "From player tracking to tactical analysis, artificial intelligence is changing how coaches prepare and make decisions during matches.",
-        category: "Tech",
-        image: "https://picsum.photos/id/201/800/600",
-        date: "June 23, 2026",
-        author: "Walter Okon",
-        
-    },
-    {
-        id: 4,
-        title: "NBA Finals: Celtics vs Warriors - Preview and Prediction",
-        description: "A classic matchup returns as the Boston Celtics face the Golden State Warriors in what promises to be an epic NBA Finals series.",
-        category: "Sports",
-        image: "https://picsum.photos/id/133/800/600",
-        date: "June 22, 2026",
-        author: "Walter Okon",
-        
-    },
-    {
-        id: 5,
-        title: "Apple Vision Pro 2 Rumors: What to Expect in 2027",
-        description: "New leaks suggest Apple is working on major improvements for the next version of their spatial computing headset.",
-        category: "Tech",
-        image: "https://picsum.photos/id/180/800/600",
-        date: "June 21, 2026",
-        author: "Walter Okon",
-       
-    },
-    {
-        id: 6,
-        title: "Manchester City Eyeing Shock Move for Kylian Mbappe",
-        description: "According to reliable sources, Manchester City are preparing a massive bid to bring the French superstar to the Premier League.",
-        category: "Football",
-        image: "https://picsum.photos/id/201/800/600",
-        date: "June 20, 2026",
-        author: "Walter Okon",
-        
-    },
-    {
-        id: 7,
-        title: "The Rise of Esports: Why It's Becoming Big Business",
-        description: "With millions of viewers and huge prize pools, esports has become one of the fastest growing industries in sports and entertainment.",
-        category: "Sports",
-        image: "https://picsum.photos/id/251/800/600",
-        date: "June 19, 2026",
-        author: "Walter Okon",
-        
-    },
-    {
-        id: 8,
-        title: "Tesla Unveils New Affordable Electric Vehicle Model",
-        description: "Elon Musk has revealed details about Tesla's upcoming budget-friendly EV that could disrupt the entire market.",
-        category: "Tech",
-        image: "https://picsum.photos/id/180/800/600",
-        date: "June 18, 2026",
-        
-    },
-    {
-        id: 9,
-        title: "Nigeria Super Eagles Qualify for 2026 World Cup",
-        description: "The Super Eagles secured qualification with a dramatic late winner against their rivals in a tense qualifying match.",
-        category: "Football",
-        image: "https://picsum.photos/id/1015/800/600",
-        date: "June 17, 2026",
-        author: "Walter Okon",
-        
-    },
-    {
-        id: 10,
-        title: "Best Smartphones of 2026: Top Flagships Compared",
-        description: "We compare the latest flagship phones from Samsung, Apple, Google, and Xiaomi to help you choose the best one.",
-        category: "Business",
-        image: "https://picsum.photos/id/201/800/600",
-        date: "June 16, 2026",
-        author: "Walter Okon",
-        
+const API_URL = `https://newsdata.io/api/1/latest?apikey=${API_KEY}&language=en`;
+
+
+
+async function getLatestNews() {
+    try {
+        const response = await fetch(API_URL);
+
+        if (!response.ok) {
+            throw new Error("Unable to fetch news.");
+        }
+
+        const data = await response.json();
+        renderArticles(data.results);
+
     }
-];
 
-function renderArticles(articles){
-    let grid = document.querySelector(".articles-grid");
-    grid.innerHTML = "";    
+    catch(error){
 
-    for (let i =0; i<articles.length; i++){
-        let articleData = articles[i];
+        console.log(error);
+
+        document.querySelector(".articles-grid").innerHTML = `
+            <h2>Unable to load news.</h2>
+        `;
+
+    }
+
+}
+
+
+
+function renderArticles(news){
+
+    const grid = document.querySelector(".articles-grid");
+
+    grid.innerHTML = "";
+
+    news.forEach(articleData => {
 
         const article = document.createElement("article");
+
         article.classList.add("article-card");
 
-        const image = document.createElement("img");
-        image.src = articleData.image;
-        image.alt = articleData.title
-        
-        const articleTitle = document.createElement("h3");
-        articleTitle.classList.add("article-card");
-        articleTitle.textContent = articleData.title;
 
-        const articleDescription = document.createElement("p")
-        articleDescription.classList.add("article-card");
-        articleDescription.textContent = articleData.description;
 
-        const articleCategory = document.createElement("span")
-        articleCategory.classList.add("article-card");
-        articleCategory.textContent = articleData.category
+        article.innerHTML = `
 
-        const readMoreButton = document.createElement("button")
-        readMoreButton.classList.add("read-more-button");
-        readMoreButton.textContent = "Read More";
+            <img
+                src="${articleData.image_url || 'https://via.placeholder.com/400x250'}"
+                alt="${articleData.title}"
+            >
 
-        readMoreButton.addEventListener("click", ()=> {
-            localStorage.setItem("selectedArticle", JSON.stringify(articleData));
-            window.location.href = "articles.html"
-        })
+            <div class="card-content">
 
-        article.appendChild(image);
-        article.appendChild(articleTitle)
-        article.appendChild(articleDescription)
-        article.appendChild(articleCategory)
-        article.appendChild(readMoreButton)
+                <span class="category">
+                    ${articleData.category ? articleData.category[0] : "General"}
+                </span>
 
-        grid.appendChild(article)
-    }
+                <h3 class="card-title">
+                    ${articleData.title}
+                </h3>
+
+                <p class="card-description">
+                    ${articleData.description || "No description available."}
+                </p>
+
+                <small>
+                    ${articleData.pubDate}
+                </small>
+
+                <br><br>
+
+                <button class="read-more-button">
+                    Read More
+                </button>
+
+            </div>
+
+        `;
+        article
+            .querySelector(".read-more-button")
+            .addEventListener("click", () => {
+
+                localStorage.setItem(
+                    "selectedArticle",
+                    JSON.stringify(articleData)
+                );
+
+                window.location.href = "articles.html";
+
+            });
+
+        grid.appendChild(article);
+
+    });
+
 }
-renderArticles(fakeNews)
 
-let categorybuttons = document.querySelectorAll(".category-btn");
+getLatestNews();
 
-categorybuttons.forEach(button => {
-    button.addEventListener("click", function(event){
-        const clickedButton = event.target;
-        const categoryName = clickedButton.dataset.category;
 
-        console.log("clicked category:", categoryName);
 
-        let filteredArticles = fakeNews
-
-        if (categoryName !== "All"){
-            filteredArticles = fakeNews.filter(news => news.category === categoryName)
-        }
-    
-        renderArticles(filteredArticles)
-    })
-})
 
 

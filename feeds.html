@@ -3,167 +3,131 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>News Feeds | Browse Latest Articles</title>
+    <title>DailyNewsHub | Continuous Live Feeds</title>
     <link rel="stylesheet" href="feeds.css">
 </head>
 <body>
 
-    <!-- 1. Header & Navigation (Consistent with Homepage) -->
     <header class="site-header">
         <div class="header-container">
-            <div class="logo">
-                <a href="home.html"><strong>DailyNewsHub
-
-                </strong></a>
+            <div class="site-logo">
+                <a href="home.html" class="logo-link">
+                    <span class="logo-text">Daily<span class="logo-accent">News</span>Hub</span>
+                </a>
             </div>
-            <nav class="main-navigation">
-                <ul>
-                    <li><a href="home.html">Home</a></li>
-                    <li><a href="feeds.html">Feeds</a></li>
-                    <li><a href="articles.html">Articles</a></li>
+            <nav class="main-navigation" aria-label="Main Navigation">
+                <ul class="nav-links">
+                    <li><a href="home.html" class="nav-link">Home</a></li>
+                    <li><a href="feeds.html" class="nav-link active">Feeds</a></li>
+                    <li><a href="articles.html" class="nav-link">Articles</a></li>
                 </ul>
             </nav>
+            <div class="mobile-menu-toggle">
+                <button type="button" class="menu-btn" aria-label="Toggle navigation menu">
+                    <span class="menu-icon-bar"></span>
+                    <span class="menu-icon-bar"></span>
+                    <span class="menu-icon-bar"></span>
+                </button>
+            </div>
         </div>
     </header>
 
-    <main class="feeds-page">
-        
-        <!-- 2. Search and Filter Section -->
-        <section class="feeds-header">
-            <h1 class="page-title">Latest News</h1>
-            
+    <main class="site-main">
 
-            <div class="search-bar">
-                <form action="/search" method="GET">
-                    <label for="news-search">Search articles:</label>
-                    <input type="search" id="news-search" name="q" placeholder="Keywords, topics, or authors...">
-                    <button type="submit">Search</button>
-                </form>
+        <section class="feeds-hero">
+            <div class="hero-container">
+                <h1 class="hero-title">Latest News</h1>
+                <p class="hero-description">Your unfiltered, real-time chronicle of global events, breaking trends, and comprehensive analytical briefings.</p>
             </div>
-
-            <nav class="category-filters">
-                <p>Filter by Category:</p>
-                <ul>
-                    <li><a href="#" class="filter-link active">All</a></li>
-                    <li><a href="#" class="filter-link">Sports</a></li>
-                    <li><a href="#" class="filter-link">Business</a></li>
-                    <li><a href="#" class="filter-link">Entertainment</a></li>
-                    <li><a href="#" class="filter-link">Technology</a></li>
-                </ul>
-            </nav>
         </section>
 
-        <hr>
-
-        <!-- 3. News Listing Section -->
-        <section class="news-listing">
-            <div class="articles-container">
+        <section class="controls-section">
+            <div class="controls-container">
                 
-                <!-- Article Card 1 -->
-                <article class="feed-card">
-                    <img src="https://via.placeholder.com/350x200" alt="Space exploration" class="card-image">
-                    <div class="card-body">
-                        <span class="category-label label-tech">Technology</span>
-                        <h2 class="card-title">Mars Rover Discovers Ancient Water Deposits</h2>
-                        <p class="card-summary">New data from the latest mission suggests that liquid water may have existed on the surface much longer than previously thought.</p>
-                        <a href="articles.html" class="read-more">Read Full Story</a>
-                    </div>
-                </article>
+                <div class="search-wrapper">
+                    <span class="search-icon-placeholder" aria-hidden="true">🔍</span>
+                    <input type="text" id="news-search" placeholder="Search topics, headlines, or content..." aria-label="Search articles">
+                    <button type="button" id="clear-search" class="clear-btn" aria-label="Clear search input" style="display: none;">✕</button>
+                </div>
 
-                <!-- Article Card 2 -->
-                <article class="feed-card">
-                    <img src="https://via.placeholder.com/350x200" alt="Stock market chart" class="card-image">
-                    <div class="card-body">
-                        <span class="category-label label-business">Business</span>
-                        <h2 class="card-title">Global Markets Reach Record Highs in Q1</h2>
-                        <p class="card-summary">Investors are optimistic as inflation cools and trade volumes reach levels not seen in over a decade.</p>
-                        <a href="articles.html" class="read-more">Read Full Story</a>
+                <nav class="categories-filter" aria-label="Filter by Topic">
+                    <div class="categories-filter-wrapper">
+                        <button type="button" class="category-btn active" data-category="">All</button>
+                        <button type="button" class="category-btn" data-category="technology">Technology</button>
+                        <button type="button" class="category-btn" data-category="sports">Sports</button>
+                        <button type="button" class="category-btn" data-category="football">Football</button>
+                        <button type="button" class="category-btn" data-category="business">Business</button>
+                        <button type="button" class="category-btn" data-category="entertainment">Entertainment</button>
+                        <button type="button" class="category-btn" data-category="science">Science</button>
+                        <button type="button" class="category-btn" data-category="health">Health</button>
                     </div>
-                </article>
-
-                <!-- Article Card 3 -->
-                <article class="feed-card">
-                    <img src="https://via.placeholder.com/350x200" alt="Stadium crowd" class="card-image">
-                    <div class="card-body">
-                        <span class="category-label label-sports">Sports</span>
-                        <h2 class="card-title">Underdog Team Wins Championship Thriller</h2>
-                        <p class="card-summary">In a stunning upset, the city's newest franchise took home the gold in an overtime final that kept fans on their feet.</p>
-                        <a href="articles.html" class="read-more">Read Full Story</a>
-                    </div>
-                </article>
-
-                <!-- Article Card 4 -->
-                <article class="feed-card">
-                    <img src="https://via.placeholder.com/350x200" alt="Concert stage" class="card-image">
-                    <div class="card-body">
-                        <span class="category-label label-entertainment">Entertainment</span>
-                        <h2 class="card-title">Award-Winning Director Announces Surprise Sequel</h2>
-                        <p class="card-summary">The film industry is buzzing after the director revealed that production has already begun on the long-awaited follow-up.</p>
-                        <a href="articles.html" class="read-more">Read Full Story</a>
-                    </div>
-                </article>
-
-                <!-- Article Card 5 -->
-                <article class="feed-card">
-                    <img src="https://via.placeholder.com/350x200" alt="E-commerce shopping" class="card-image">
-                    <div class="card-body">
-                        <span class="category-label label-business">Business</span>
-                        <h2 class="card-title">Retail Trends: The Shift Toward Subscription Models</h2>
-                        <p class="card-summary">Traditional retailers are pivoting to monthly subscription boxes to secure steady revenue streams in a digital economy.</p>
-                        <a href="articles.html" class="read-more">Read Full Story</a>
-                    </div>
-                </article>
-
-                <!-- Article Card 6 -->
-                <article class="feed-card">
-                    <img src="https://via.placeholder.com/350x200" alt="Electric vehicle" class="card-image">
-                    <div class="card-body">
-                        <span class="category-label label-tech">Technology</span>
-                        <h2 class="card-title">Next-Gen Batteries Could Double EV Range</h2>
-                        <p class="card-summary">A breakthrough in solid-state battery technology promises to eliminate range anxiety for electric vehicle owners.</p>
-                        <a href="articles.html" class="read-more">Read Full Story</a>
-                    </div>
-                </article>
+                </nav>
 
             </div>
         </section>
 
-        <!-- 4. Pagination Section -->
-        <nav class="pagination-container" aria-label="Page navigation">
-            <ul class="pagination">
-                <li><a href="#" class="page-btn prev-btn">Previous</a></li>
-                <li><a href="#" class="page-number active">1</a></li>
-                <li><a href="#" class="page-number">2</a></li>
-                <li><a href="#" class="page-number">3</a></li>
-                <li><a href="#" class="page-btn next-btn">Next</a></li>
-            </ul>
-        </nav>
+        <section class="feed-listing-section">
+            <div class="feed-container">
+                
+                <div class="loading" id="feed-loading" style="display: none;"></div>
+                <div class="error-message" id="feed-error" style="display: none;"></div>
+                <div class="no-results" id="feed-no-results" style="display: none;">No articles found.</div>
+
+                <div class="articles-container"></div>
+
+                <div class="load-more-wrapper">
+                    <button type="button" id="load-more" class="btn btn-load-more" style="display: none;">Load More</button>
+                </div>
+
+            </div>
+        </section>
 
     </main>
 
-    <!-- 5. Footer (Consistent with Homepage) -->
     <footer class="site-footer">
-        <div class="footer-container">
-            <div class="footer-info">
-                <h2 class="footer-logo">NewsFlow</h2>
-                <p>Your trusted source for unbiased reporting and independent journalism since 2024.</p>
+        <div class="footer-top-wrapper">
+            <div class="footer-container">
+                <div class="footer-block footer-about">
+                    <h2 class="footer-logo">Daily<span class="logo-accent">News</span>Hub</h2>
+                    <p class="footer-about-text">An independent, advanced news curation ecosystem presenting verified, multi-perspective data points covering modern world events.</p>
+                </div>
+                <div class="footer-block footer-links">
+                    <h3 class="footer-block-title">Quick Links</h3>
+                    <nav class="footer-navigation" aria-label="Footer Quick Links Navigation">
+                        <ul class="footer-nav-list">
+                            <li><a href="home.html" class="footer-link">Home</a></li>
+                            <li><a href="feeds.html" class="footer-link">Feeds</a></li>
+                            <li><a href="articles.html" class="footer-link">Articles</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="footer-block footer-legal">
+                    <h3 class="footer-block-title">Legal</h3>
+                    <nav class="footer-navigation" aria-label="Footer Legal Navigation">
+                        <ul class="footer-nav-list">
+                            <li><a href="#" class="footer-link">Privacy Policy</a></li>
+                            <li><a href="#" class="footer-link">Terms of Service</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="footer-block footer-social">
+                    <h3 class="footer-block-title">Connect With Us</h3>
+                    <div class="social-links-wrapper">
+                        <a href="#" class="social-icon-link" aria-label="Follow us on Twitter">Twitter</a>
+                        <a href="#" class="social-icon-link" aria-label="Follow us on LinkedIn">LinkedIn</a>
+                        <a href="#" class="social-icon-link" aria-label="Follow us on Facebook">Facebook</a>
+                    </div>
+                </div>
             </div>
-            
-            <nav class="footer-nav">
-                <h3>Quick Links</h3>
-                <ul>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Terms of Service</a></li>
-                    <li><a href="#">Contact Us</a></li>
-                    <li><a href="#">About Our Team</a></li>
-                </ul>
-            </nav>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 NewsFlow Media Group. All rights reserved.</p>
+        <div class="footer-bottom-wrapper">
+            <div class="footer-container bottom-container">
+                <p class="copyright-text">&copy; 2026 DailyNewsHub Media Group. All rights reserved.</p>
+            </div>
         </div>
     </footer>
-
+</body>
+</html>
     <script src="feeds.js"></script>
 </body>
 </html>

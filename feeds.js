@@ -1,165 +1,248 @@
+//For learning purposes, the NewsData.io API key is currently stored directly in the JavaScript file instead of an environment (.env) file.
+//I understand that exposing API keys in client-side code is not a recommended practice for production applications. In a real-world project, 
+//I would store sensitive API keys securely using environment variables and a backend server or serverless function.
 
-const fakeNews = [
+        const API_CONFIG = {
+            ENDPOINT: 'https://newsdata.io/api/1/news',
+            KEY: 'pub_37cb3f9d1ece4e1da0c15c0d9eda6a24',
+            LANGUAGE: 'en'
+        };
 
-    {
-        id: 1,
-        title: "Messi Scores Brace as Inter Miami Crushes Orlando City",
-        description: "Lionel Messi delivered another masterclass performance, scoring twice to lead Inter Miami to a convincing victory in the Leagues Cup.",
-        category: "Football",
-        image: "https://picsum.photos/id/1015/800/600",
-        date: "June 25, 2026",
-        author: "Walter Okon",
-        button: "Read More"
-    },
-    {
-        id: 2,
-        title: "Arsenal Complete Record Signing of Brazilian Starlet",
-        description: "Arsenal have made a huge statement in the transfer market by signing one of Brazil's most promising young talents.",
-        category: "Football",
-        image: "https://picsum.photos/id/1020/800/600",
-        date: "June 24, 2026",
-        author: "Walter Okon",
-        button: "Read More"
-    },
-    {
-        id: 3,
-        title: "How AI is Revolutionizing Modern Football Tactics",
-        description: "From player tracking to tactical analysis, artificial intelligence is changing how coaches prepare and make decisions during matches.",
-        category: "Tech",
-        image: "https://picsum.photos/id/201/800/600",
-        date: "June 23, 2026",
-        author: "Walter Okon",
-        button: "Read More"
-    },
-    {
-        id: 4,
-        title: "NBA Finals: Celtics vs Warriors - Preview and Prediction",
-        description: "A classic matchup returns as the Boston Celtics face the Golden State Warriors in what promises to be an epic NBA Finals series.",
-        category: "Sports",
-        image: "https://picsum.photos/id/133/800/600",
-        date: "June 22, 2026",
-        author: "Walter Okon",
-        button: "Read More"
-    },
-    {
-        id: 5,
-        title: "Apple Vision Pro 2 Rumors: What to Expect in 2027",
-        description: "New leaks suggest Apple is working on major improvements for the next version of their spatial computing headset.",
-        category: "Tech",
-        image: "https://picsum.photos/id/180/800/600",
-        date: "June 21, 2026",
-        author: "Walter Okon",
-        button: "Read More"
-    },
-    {
-        id: 6,
-        title: "Manchester City Eyeing Shock Move for Kylian Mbappe",
-        description: "According to reliable sources, Manchester City are preparing a massive bid to bring the French superstar to the Premier League.",
-        category: "Football",
-        image: "https://picsum.photos/id/201/800/600",
-        date: "June 20, 2026",
-        author: "Walter Okon",
-        button: "Read More"
-    },
-    {
-        id: 7,
-        title: "The Rise of Esports: Why It's Becoming Big Business",
-        description: "With millions of viewers and huge prize pools, esports has become one of the fastest growing industries in sports and entertainment.",
-        category: "Sports",
-        image: "https://picsum.photos/id/251/800/600",
-        date: "June 19, 2026",
-        author: "Walter Okon",
-        button: "Read More"
-    },
-    {
-        id: 8,
-        title: "Tesla Unveils New Affordable Electric Vehicle Model",
-        description: "Elon Musk has revealed details about Tesla's upcoming budget-friendly EV that could disrupt the entire market.",
-        category: "Tech",
-        image: "https://picsum.photos/id/180/800/600",
-        date: "June 18, 2026",
-        author: "Walter Okon",
-        button: "Read More"
-    },
-    {
-        id: 9,
-        title: "Nigeria Super Eagles Qualify for 2026 World Cup",
-        description: "The Super Eagles secured qualification with a dramatic late winner against their rivals in a tense qualifying match.",
-        category: "Football",
-        image: "https://picsum.photos/id/1015/800/600",
-        date: "June 17, 2026",
-        author: "Walter Okon",
-        button: "Read More"
-    },
-    {
-        id: 10,
-        title: "Best Smartphones of 2026: Top Flagships Compared",
-        description: "We compare the latest flagship phones from Samsung, Apple, Google, and Xiaomi to help you choose the best one.",
-        category: "Business",
-        image: "https://picsum.photos/id/201/800/600",
-        date: "June 16, 2026",
-        author: "Walter Okon",
-        button: "Read More"
-    }
-];
+        const state = {
+            currentCategory: '',
+            searchQuery: '',
+            nextPageId: null,
+            cachedArticles: [],     
+            placeholderImage: 'https://via.placeholder.com/600x400/1e293b/f8fafc?text=DailyNewsHub'
+        };
 
+        const DOM = {
+            searchField: document.getElementById('news-search'),
+            clearSearchBtn: document.getElementById('clear-search'),
+            categoryButtons: document.querySelectorAll('.category-btn'),
+            container: document.querySelector('.articles-container'),
+            loadMoreBtn: document.getElementById('load-more'),
+            loadingNode: document.getElementById('feed-loading'),
+            errorNode: document.getElementById('feed-error'),
+            noResultsNode: document.getElementById('feed-no-results')
+        };
 
+        document.addEventListener('DOMContentLoaded', () => {
+            initApp();
+        });
 
-function renderArticles(articles){
-    let articlesContainer = document.querySelector(".articles-container");
-    articlesContainer.innerHTML = "";    
+        function initApp() {
+            
+            DOM.searchField.addEventListener('input', handleSearchInput);
+            DOM.clearSearchBtn.addEventListener('click', clearSearchAction);
+            DOM.loadMoreBtn.addEventListener('click', loadMoreNews);
+            
+            DOM.categoryButtons.forEach(btn => {
+                btn.addEventListener('click', (e) => filterByCategory(e));
+            });
 
-    for (let i =0; i<articles.length; i++){
-        let articleData = articles[i];
-
-        const article = document.createElement("article");
-        article.classList.add("feed-card");
-
-        const image = document.createElement("img");
-        image.src = articleData.image;
-        image.alt = articleData.title
-        image.classList.add("card-image");
-        
-        const articleTitle = document.createElement("h3");
-        articleTitle.classList.add("card-title");
-        articleTitle.textContent = articleData.title;
-
-        const articleDescription = document.createElement("p")
-        articleDescription.classList.add("card-summary");
-        articleDescription.textContent = articleData.description;
-
-        const articleCategory = document.createElement("span")
-        articleCategory.classList.add("category-label");
-        articleCategory.textContent = articleData.category
-
-        const articleButton = document.createElement("button")
-        articleButton.classList.add("article-button");
-        articleButton.textContent = articleData.button
-
-
-        article.appendChild(image);
-        article.appendChild(articleTitle)
-        article.appendChild(articleDescription)
-        article.appendChild(articleCategory)
-        article.appendChild(articleButton)
-        
-
-        articlesContainer.appendChild(article)
-    }
-}
-renderArticles(fakeNews)
-
-let searchInput = document.getElementById("news-search");
-searchInput.addEventListener("input", function(){
-        const searchTerm = searchInput.value.trim().toLowerCase();
-
-        let filteredNews = fakeNews;
-
-        if (searchTerm !== ''){
-            filteredNews = fakeNews.filter(article =>
-                article.category.toLowerCase().includes(searchTerm) ||
-                article.description.toLowerCase().includes(searchTerm)
-            )
+            // Initial API Fetch
+            fetchNews();
         }
-        renderArticles(filteredNews)
-})
+
+        async function fetchNews(appendMode = false) {
+            if (!appendMode) {
+                showLoading();
+                hideError();
+                hideNoResults();
+                DOM.container.innerHTML = '';
+                state.cachedArticles = [];
+                state.nextPageId = null;
+            }
+
+            try {
+                
+                let url = `${API_CONFIG.ENDPOINT}?apikey=${API_CONFIG.KEY}&language=${API_CONFIG.LANGUAGE}`;
+                
+                if (state.currentCategory) {
+                    url += `&category=${state.currentCategory}`;
+                }
+                if (state.nextPageId) {
+                    url += `&page=${state.nextPageId}`;
+                }
+
+                const response = await fetch(url);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP Error Status Encountered: ${response.status}`);
+                }
+
+                const data = await response.json();
+
+                if (data.status === 'error') {
+                    throw new Error(data.results?.message || 'API processing exception occurred.');
+                }
+
+                const articlesReceived = data.results || [];
+                state.nextPageId = data.nextPage || null;
+
+                if (articlesReceived.length === 0 && !appendMode) {
+                    showNoResults();
+                    DOM.loadMoreBtn.style.display = 'none';
+                    return;
+                }
+                state.cachedArticles = [...state.cachedArticles, ...articlesReceived];
+                executeRenderWorkflow();
+
+            } catch (error) {
+                console.error('App Network/Execution Catch Triggered:', error);
+                showError(`Failed to fetch the latest updates. Error: ${error.message}`);
+            } finally {
+                hideLoading();
+            }
+        }
+
+        function executeRenderWorkflow() {
+            let workingSet = [...state.cachedArticles];
+
+            // Local real-time search filtration matching
+            if (state.searchQuery) {
+                workingSet = workingSet.filter(article => {
+                    const searchableTitle = (article.title || '').toLowerCase();
+                    const searchableDesc = (article.description || '').toLowerCase();
+                    return searchableTitle.includes(state.searchQuery) || searchableDesc.includes(state.searchQuery);
+                });
+            }
+
+            // Empty container evaluations
+            if (workingSet.length === 0) {
+                showNoResults();
+                DOM.container.innerHTML = '';
+                DOM.loadMoreBtn.style.display = 'none';
+            } else {
+                hideNoResults();
+                renderArticles(workingSet);
+                
+                if (state.nextPageId) {
+                    DOM.loadMoreBtn.style.display = 'inline-block';
+                } else {
+                    DOM.loadMoreBtn.style.display = 'none';
+                }
+            }
+        }
+
+        function renderArticles(newsSet) {
+            DOM.container.innerHTML = ''; 
+
+            newsSet.forEach((article, index) => {
+                // Formatting fallback variables safety checks
+                const cardImage = article.image_url || state.placeholderImage;
+                const cardTitle = article.title || 'Untitled Coverage';
+                const cardDesc = article.description || 'No description available.';
+                const cardAuthor = (article.creator && article.creator.length > 0) ? article.creator.join(', ') : 'Unknown Author';
+                const cardSource = article.source_id || 'Global News Network';
+                const cardCategory = (article.category && article.category.length > 0) ? article.category[0] : 'General';
+                
+                // Date extraction processing safely
+                let cardDate = 'Recent Content';
+                if (article.pubDate) {
+                    try {
+                        const parsedDate = new Date(article.pubDate);
+                        cardDate = parsedDate.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+                    } catch(e) { cardDate = article.pubDate; }
+                }
+
+                // Generating DOM structure cleanly using string template literals
+                const articleCard = document.createElement('article');
+                articleCard.className = 'feed-card-item';
+                
+                articleCard.innerHTML = `
+                    <div class="card-media-wrapper">
+                        <img src="${cardImage}" alt="${cardTitle}" class="card-img" loading="lazy">
+                        <span class="card-badge-category">${cardCategory.toUpperCase()}</span>
+                    </div>
+                    <div class="card-body-wrapper">
+                        <div class="card-meta-upper">
+                            <span class="card-source">${cardSource}</span>
+                            <span class="card-divider">•</span>
+                            <span class="card-date">${cardDate}</span>
+                        </div>
+                        <h3 class="card-headline-title">${cardTitle}</h3>
+                        <p class="card-excerpt-text">${cardDesc}</p>
+                        <div class="card-footer-lower">
+                            <span class="card-byline">By: ${cardAuthor}</span>
+                            <button type="button" class="btn-read-story" data-index="${index}">Read More</button>
+                        </div>
+                    </div>
+                `;
+
+    
+                const readBtn = articleCard.querySelector('.btn-read-story');
+                readBtn.addEventListener('click', () => {
+                    navigateToArticleDetail(article);
+                });
+
+                DOM.container.appendChild(articleCard);
+            });
+        }
+
+    
+        function navigateToArticleDetail(articleObject) {
+            try {
+                localStorage.setItem('selectedArticle', JSON.stringify(articleObject));
+                window.location.href = 'articles.html';
+            } catch (storageError) {
+                console.error('LocalStorage write execution access failed:', storageError);
+                alert('Unable to load full article view. Local storage permissions might be disabled.');
+            }
+        }
+
+        function handleSearchInput(e) {
+            state.searchQuery = e.target.value.toLowerCase().trim();
+            
+            if (state.searchQuery.length > 0) {
+                DOM.clearSearchBtn.style.display = 'block';
+            } else {
+                DOM.clearSearchBtn.style.display = 'none';
+            }
+
+            executeRenderWorkflow();
+        }
+
+        function clearSearchAction() {
+            DOM.searchField.value = '';
+            state.searchQuery = '';
+            DOM.clearSearchBtn.style.display = 'none';
+            executeRenderWorkflow();
+        }
+
+        function filterByCategory(event) {
+            const chosenButton = event.currentTarget;
+            const newCategorySelection = chosenButton.getAttribute('data-category');
+
+            if (state.currentCategory === newCategorySelection) return;
+
+            DOM.categoryButtons.forEach(btn => btn.classList.remove('active'));
+            chosenButton.classList.add('active');
+
+            // Set systemic runtime execution value
+            state.currentCategory = newCategorySelection;
+
+            fetchNews();
+        }
+
+        function loadMoreNews() {
+            if (state.nextPageId) {
+                fetchNews(true); 
+            }
+        }
+
+        function showLoading() { DOM.loadingNode.style.display = 'block'; }
+        function hideLoading() { DOM.loadingNode.style.display = 'none'; }
+        
+        function showError(msg) {
+            DOM.errorNode.textContent = msg;
+            DOM.errorNode.style.display = 'block';
+        }
+        function hideError() {
+            DOM.errorNode.textContent = '';
+            DOM.errorNode.style.display = 'none';
+        }
+
+        function showNoResults() { DOM.noResultsNode.style.display = 'block'; }
+        function hideNoResults() { DOM.noResultsNode.style.display = 'none'; }
