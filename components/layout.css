@@ -1,0 +1,608 @@
+:root {
+    /* Color Palette */
+    --bg-color: #0F172A;
+    --surface-color: #1E293B;
+    --surface-rgb: 30, 41, 59;
+    --border-color: #334155;
+    --primary-blue: #2563EB;
+    --secondary-blue: #3B82F6;
+    --accent-blue: #60A5FA;
+    --text-primary: #F8FAFC;
+    --text-muted: #CBD5E1;
+    --text-dimmed: #94A3B8;
+
+    /* Structural Variables */
+    --header-height: 4.5rem;
+    --max-width: 1300px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+
+    /* Shadow Architectures */
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
+    --shadow-md: 0 12px 30px -10px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 20px 40px -15px rgba(0, 0, 0, 0.6);
+
+    /* Systemic Transitions */
+    --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-spring: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* ==========================================================================
+Reset & Accessibility Foundations
+   ========================================================================== */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    visibility: hidden;
+}
+
+ul,
+ol {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: color var(--transition-fast), opacity var(--transition-fast);
+}
+
+button {
+    font-family: inherit;
+    background: none;
+    border: none;
+    cursor: pointer;
+    outline: none;
+}
+
+/* Accessible Global Focus States */
+:focus-visible {
+    outline: 2px solid var(--accent-blue);
+    outline-offset: 4px;
+}
+
+/* Accessibility Reduced Motion Handling */
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-delay: -1ms !important;
+        animation-duration: 1ms !important;
+        animation-iteration-count: 1 !important;
+        background-attachment: initial !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0s !important;
+        transition-delay: 0s !important;
+    }
+}
+
+/* ==========================================================================
+ Header & Shell Shell Infrastructure
+   ========================================================================== */
+.site-header {
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    height: var(--header-height);
+    background: rgba(15, 23, 42, 0.75);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(51, 65, 85, 0.5);
+    transition: background var(--transition-normal), border var(--transition-normal), transform var(--transition-normal);
+}
+
+.site-header.scrolled {
+    background: rgba(15, 23, 42, 0.9);
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+}
+
+.header-container {
+    max-width: var(--max-width);
+    height: 100%;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+}
+
+.site-logo {
+    display: inline-flex;
+    align-items: center;
+}
+
+.logo-link {
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    user-select: none;
+}
+
+.logo-accent {
+    background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    padding: 0 0.05em;
+}
+
+.logo-link:hover {
+    opacity: 0.9;
+    transform: scale(0.99);
+}
+
+/* ==========================================================================
+   Desktop Navigation
+   ========================================================================== */
+.main-navigation {
+    display: block;
+    height: 100%;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+    height: 100%;
+}
+
+.nav-links li {
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.nav-link {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    padding: 0.5rem 0;
+    position: relative;
+    letter-spacing: -0.01em;
+    display: inline-flex;
+    align-items: center;
+    height: 100%;
+    transition: color var(--transition-fast);
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: calc(var(--header-height) * -0.05);
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, var(--primary-blue), var(--secondary-blue));
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform var(--transition-normal);
+    border-radius: 2px;
+}
+
+.nav-link:hover {
+    color: var(--text-primary);
+}
+
+.nav-link:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+/* Active Link State Matrix */
+.nav-link.active {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.nav-link.active::after {
+    transform: scaleX(1);
+    transform-origin: left;
+    background: var(--secondary-blue);
+}
+
+/* ==========================================================================
+   Hamburger Menu Button Component
+   ========================================================================== */
+.mobile-menu-toggle {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1010;
+}
+
+.menu-btn {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    border-radius: var(--radius-md);
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: background var(--transition-fast), border var(--transition-fast);
+}
+
+.menu-btn:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.menu-line {
+    width: 20px;
+    height: 2px;
+    background-color: var(--text-primary);
+    border-radius: 2px;
+    transition: transform var(--transition-normal), opacity var(--transition-normal);
+}
+
+/* Hamburger Transforming States Controlled via layout.js menuState */
+.menu-btn[aria-expanded="true"] .menu-line:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.menu-btn[aria-expanded="true"] .menu-line:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0);
+}
+
+.menu-btn[aria-expanded="true"] .menu-line:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+/* ==========================================================================
+   Mobile Navigation Panel
+   ========================================================================== */
+.mobile-navigation {
+    position: absolute;
+    top: calc(var(--header-height) + 0.75rem);
+    left: 1rem;
+    right: 1rem;
+    background: rgba(30, 41, 59, 0.95);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.6);
+}
+
+.mobile-navigation {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-20px) scale(0.95);
+    max-height: 0;
+    overflow: hidden;
+    transition:
+        opacity var(--transition-normal),
+        visibility var(--transition-normal),
+        transform var(--transition-normal),
+        max-height var(--transition-normal);
+}
+
+.mobile-navigation.is-open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+    max-height: 400px;
+}
+
+.mobile-nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%; 
+}
+
+.mobile-nav-item {
+    width: 100%;
+}
+
+.mobile-nav-link {
+    padding: 1rem 1.25rem;
+    font-size: 1.1rem;
+    border-radius: 12px;
+}
+
+.mobile-nav-link:hover {
+    background: rgba(37, 99, 235, 0.15);
+}
+
+.mobile-nav-link.active {
+    color: var(--text-primary);
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.15), rgba(59, 130, 246, 0.05));
+    border-color: rgba(37, 99, 235, 0.25);
+    font-weight: 600;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* ==========================================================================
+   Footer Architectural Layout
+   ========================================================================== */
+.site-footer {
+    background-color: #0B0F19;
+    border-top: 1px solid var(--border-color);
+    width: 100%;
+    position: relative;
+    z-index: 10;
+}
+
+.footer-top-wrapper {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 6rem 2rem 4rem;
+}
+
+.footer-container {
+    display: grid;
+    grid-template-columns: 2fr repeat(3, 1fr);
+    gap: 4rem;
+}
+
+.footer-block {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.footer-about-text {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--text-muted);
+    max-width: 320px;
+}
+
+.footer-block-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-dimmed);
+    padding-bottom: 0.25rem;
+}
+
+.footer-nav-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.footer-link {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    width: fit-content;
+    position: relative;
+}
+
+.footer-link:hover {
+    color: var(--accent-blue);
+    transform: translateX(4px);
+}
+
+/* ==========================================================================
+   Footer Social Modules
+   ========================================================================== */
+.social-links-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    max-width: 200px;
+}
+
+.social-icon-link {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0.65rem 1.2rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    background-color: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--transition-fast),
+        background var(--transition-fast),
+        border-color var(--transition-fast),
+        box-shadow var(--transition-fast),
+        color var(--transition-fast);
+}
+
+.social-icon-link:hover {
+    transform: translateY(-3px);
+    background-color: rgba(37, 99, 235, 0.08);
+    border-color: var(--secondary-blue);
+    color: var(--text-primary);
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.2);
+}
+
+/* Footer Bottom Strip Components */
+.footer-bottom-wrapper {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 2.5rem 2rem;
+    border-top: 1px solid rgba(51, 65, 85, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.copyright-text {
+    font-size: 0.85rem;
+    color: var(--text-dimmed);
+    text-align: center;
+    letter-spacing: 0.01em;
+}
+
+/* ==========================================================================
+   Global Layout Animations
+   ========================================================================== */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-16px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in {
+    animation: fadeIn var(--transition-normal) forwards;
+}
+
+.animate-slide-down {
+    animation: slideDown var(--transition-normal) forwards;
+}
+
+/* ==========================================================================
+   Responsive Adaptations
+   ========================================================================== */
+
+/* Laptop Grid Optimizations */
+@media (max-width: 1200px) {
+    .footer-container {
+        gap: 2.5rem;
+        grid-template-columns: 1.5fr repeat(3, 1fr);
+    }
+}
+
+/* Medium Laptop Interventions */
+@media (max-width: 992px) {
+    .footer-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 3.5rem;
+    }
+
+    .footer-block.footer-about {
+        grid-column: span 2;
+    }
+
+    .footer-about-text {
+        max-width: 100%;
+    }
+
+    .social-links-wrapper {
+        flex-direction: row;
+        flex-wrap: wrap;
+        max-width: 100%;
+    }
+
+    .social-icon-link {
+        flex: 1 1 calc(50% - 0.5rem);
+        justify-content: center;
+    }
+}
+
+/* Tablet Layout Inversion Layer */
+@media (max-width: 768px) {
+    .header-container {
+        padding: 0 1.5rem;
+    }
+
+    .main-navigation {
+        display: none;
+    }
+
+    .mobile-menu-toggle {
+        display: flex;
+    }
+}
+
+/* Mobile Screen Matrix Rules */
+@media (max-width: 576px) {
+    :root {
+        --header-height: 4rem;
+    }
+
+    .footer-top-wrapper {
+        padding: 4rem 1.5rem 3rem;
+    }
+
+    .footer-container {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+    }
+
+    .footer-block.footer-about {
+        grid-column: span 1;
+    }
+
+    .social-links-wrapper {
+        flex-direction: column;
+    }
+
+    .social-icon-link {
+        width: 100%;
+    }
+
+    .mobile-navigation {
+        left: 1rem;
+        right: 1rem;
+    }
+}
+
+/* Micro Device Baseline Optimizations */
+@media (max-width: 400px) {
+    .logo-link {
+        font-size: 1.3rem;
+    }
+
+    .menu-btn {
+        width: 36px;
+        height: 36px;
+    }
+
+    .mobile-nav-link {
+        padding: 1rem 1.25rem;
+        font-size: 1.1rem;
+        border-radius: 12px;
+    }
+}
+
+/* Ensure mobile navigation is properly positioned */
+@media (max-width: 768px) {
+    .mobile-menu-toggle {
+        display: flex;
+        position: relative;
+        z-index: 1010;
+    }
+
+    .mobile-navigation {
+        position: fixed;
+        /* Changed from absolute to fixed */
+        top: var(--header-height);
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+        width: calc(100% - 2rem);
+        max-width: var(--max-width);
+        transform-origin: top center;
+    }
+}

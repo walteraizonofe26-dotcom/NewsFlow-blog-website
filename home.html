@@ -1,55 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DailyNewsHub | Stay Ahead with Today's Breaking News</title>
-    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="components/layout.css">
+    <link rel="stylesheet" href="css/home.css">
 </head>
+
 <body>
-
-    <!-- 1. HEADER SECTION -->
-    <header class="site-header">
-        <div class="header-container">
-            <div class="site-logo">
-                <a href="home.html" class="logo-link">
-                    <span class="logo-text">Daily<span class="logo-accent">News</span>Hub</span>
-                </a>
-            </div>
-            
-            <nav class="main-navigation" aria-label="Main Navigation">
-                <ul class="nav-links">
-                    <li><a href="home.html" class="nav-link active">Home</a></li>
-                    <li><a href="feeds.html" class="nav-link">Feeds</a></li>
-                    <li><a href="articles.html" class="nav-link">Articles</a></li>
-                </ul>
-            </nav>
-
-            <!-- Responsive Mobile Menu Trigger -->
-            <div class="mobile-menu-toggle">
-                <button type="button" class="menu-btn" aria-label="Toggle navigation menu">
-                    <span class="menu-icon-bar"></span>
-                    <span class="menu-icon-bar"></span>
-                    <span class="menu-icon-bar"></span>
-                </button>
-            </div>
-        </div>
-    </header>
+    <div id="header-container"></div>
 
     <!-- MAIN CONTENT CONTAINER -->
     <main class="site-main">
 
         <!-- 2. HERO SECTION -->
         <section class="hero-section">
-            <div class="hero-overlay"></div>
-            <div class="hero-container">
-                <div class="hero-content">
-                    <span class="hero-badge">Live Updates</span>
-                    <h1 class="hero-headline">Stay Ahead with Today's Breaking News</h1>
-                    <p class="hero-description">Comprehensive reporting, trusted analysis, and the critical stories shaping our world—delivered dynamically in real-time.</p>
-                    <div class="hero-actions">
-                        <a href="#headlines" class="btn btn-primary">Explore Latest News</a>
-                        <a href="#categories" class="btn btn-secondary">Browse Categories</a>
+            <div class="hero-overlay">
+                <div class="hero-container">
+                    <div class="hero-content">
+                        <span class="hero-badge">Live Updates</span>
+                        <h1 class="hero-headline">Stay Ahead with Today's Breaking News</h1>
+                        <p class="hero-description">Comprehensive reporting, trusted analysis, and the critical stories
+                            shaping our world—delivered dynamically in real-time.</p>
+                        <div class="hero-actions">
+                            <a href="#headlines" class="btn btn-primary">Explore Latest News</a>
+                            <a href="#categories" class="btn btn-secondary">Browse Categories</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -64,10 +42,10 @@
                         <span class="pulse-dot"></span> Real-Time Feed
                     </span>
                 </div>
-                
+
                 <!-- Target container for JavaScript dynamic injection -->
                 <div class="articles-grid"></div>
-                
+
             </div>
         </section>
 
@@ -76,7 +54,7 @@
                 <h2 class="section-title text-center">Browse by Category</h2>
 
                 <p class="section-subtitle text-center">Filter articles across global topics and beats</p>
-                
+
 
                 <div class="categories-filter-wrapper">
                     <button type="button" class="category-btn" data-category="">All</button>
@@ -95,7 +73,7 @@
         <section class="features-section">
             <div class="section-container">
                 <h2 class="section-title text-center">Why Choose DailyNewsHub</h2>
-                
+
                 <div class="features-grid">
                     <!-- Feature Card 1 -->
                     <div class="feature-card">
@@ -103,7 +81,8 @@
                             <span class="feature-icon" aria-hidden="true">⚡</span>
                         </div>
                         <h3 class="feature-title">Fast Updates</h3>
-                        <p class="feature-description">Latest stories meticulously tracked and updated continuously throughout the day.</p>
+                        <p class="feature-description">Latest stories meticulously tracked and updated continuously
+                            throughout the day.</p>
                     </div>
 
                     <!-- Feature Card 2 -->
@@ -112,7 +91,8 @@
                             <span class="feature-icon" aria-hidden="true">🛡️</span>
                         </div>
                         <h3 class="feature-title">Trusted Sources</h3>
-                        <p class="feature-description">News aggregated exclusively from vetted, accurate, and globally reliable publishers.</p>
+                        <p class="feature-description">News aggregated exclusively from vetted, accurate, and globally
+                            reliable publishers.</p>
                     </div>
 
                     <!-- Feature Card 3 -->
@@ -121,26 +101,9 @@
                             <span class="feature-icon" aria-hidden="true">📱</span>
                         </div>
                         <h3 class="feature-title">Simple Experience</h3>
-                        <p class="feature-description">A fluid, clean reading ecosystem built directly around minimizing digital clutter.</p>
+                        <p class="feature-description">A fluid, clean reading ecosystem built directly around minimizing
+                            digital clutter.</p>
                     </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 6. TRENDING TOPICS SECTION -->
-        <section class="trending-section">
-            <div class="section-container">
-                <h2 class="section-title">Trending Topics</h2>
-                
-                <div class="topics-container">
-                    <a href="#" class="topic-chip">AI</a>
-                    <a href="#" class="topic-chip">JavaScript</a>
-                    <a href="#" class="topic-chip">Football</a>
-                    <a href="#" class="topic-chip">Premier League</a>
-                    <a href="#" class="topic-chip">Apple</a>
-                    <a href="#" class="topic-chip">Startups</a>
-                    <a href="#" class="topic-chip">Cybersecurity</a>
-                    <a href="#" class="topic-chip">Space</a>
                 </div>
             </div>
         </section>
@@ -150,11 +113,13 @@
             <div class="newsletter-container">
                 <div class="newsletter-content">
                     <h2 class="newsletter-title">Subscribe to our Newsletter</h2>
-                    <p class="newsletter-description">Get the absolute top executive briefs and analytical deep-dives dropped straight into your email inbox daily.</p>
+                    <p class="newsletter-description">Get the absolute top executive briefs and analytical deep-dives
+                        dropped straight into your email inbox daily.</p>
                 </div>
                 <div class="newsletter-action">
                     <form class="newsletter-form" action="#" method="POST" onsubmit="return false;">
-                        <input type="email" class="form-input" placeholder="Enter your email address" required aria-label="Email address for subscription">
+                        <input type="email" class="form-input" placeholder="Enter your email address" required
+                            aria-label="Email address for subscription">
                         <button type="submit" class="btn btn-submit">Subscribe Now</button>
                     </form>
                 </div>
@@ -165,7 +130,8 @@
         <section class="cta-section">
             <div class="cta-container">
                 <h2 class="cta-title">Looking for the Complete Stream?</h2>
-                <p class="cta-description">Dive directly into our unedited, chronologically compiled global feed coverage.</p>
+                <p class="cta-description">Dive directly into our unedited, chronologically compiled global feed
+                    coverage.</p>
                 <div class="cta-actions">
                     <a href="feeds.html" class="btn btn-cta">View All News &rarr;</a>
                 </div>
@@ -174,60 +140,9 @@
 
     </main>
 
-    <!-- 9. FOOTER SECTION -->
-    <footer class="site-footer">
-        <div class="footer-top-wrapper">
-            <div class="footer-container">
-                
-                <!-- Brand About Block -->
-                <div class="footer-block footer-about">
-                    <h2 class="footer-logo">Daily<span class="logo-accent">News</span>Hub</h2>
-                    <p class="footer-about-text">An independent, advanced news curation ecosystem presenting verified, multi-perspective data points covering modern world events.</p>
-                </div>
-
-                <!-- Navigation Columns Links -->
-                <div class="footer-block footer-links">
-                    <h3 class="footer-block-title">Quick Links</h3>
-                    <nav class="footer-navigation" aria-label="Footer Quick Links Navigation">
-                        <ul class="footer-nav-list">
-                            <li><a href="home.html" class="footer-link">Home</a></li>
-                            <li><a href="feeds.html" class="footer-link">Feeds</a></li>
-                            <li><a href="articles.html" class="footer-link">Articles</a></li>
-                        </ul>
-                    </nav>
-                </div>
-
-                <!-- Legal/Policy Column Links -->
-                <div class="footer-block footer-legal">
-                    <h3 class="footer-block-title">Legal</h3>
-                    <nav class="footer-navigation" aria-label="Footer Legal Navigation">
-                        <ul class="footer-nav-list">
-                            <li><a href="#" class="footer-link">Privacy Policy</a></li>
-                            <li><a href="#" class="footer-link">Terms of Service</a></li>
-                        </ul>
-                    </nav>
-                </div>
-
-                <!-- Social Media Column Placeholders -->
-                <div class="footer-block footer-social">
-                    <h3 class="footer-block-title">Connect With Us</h3>
-                    <div class="social-links-wrapper">
-                        <a href="#" class="social-icon-link" aria-label="Follow us on X/Twitter">Twitter</a>
-                        <a href="#" class="social-icon-link" aria-label="Follow us on LinkedIn">LinkedIn</a>
-                        <a href="#" class="social-icon-link" aria-label="Follow us on Facebook">Facebook</a>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-        <!-- Lower Attribution Footer Layer -->
-        <div class="footer-bottom-wrapper">
-            <div class="footer-container bottom-container">
-                <p class="copyright-text">&copy; 2026 DailyNewsHub Media Group. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
-<script src="home.js"></script>
+    <div id="footer-container"></div>
+    <script defer src="components/layout.js"></script>
+    <script defer src="js/home.js"></script>
 </body>
+
 </html>

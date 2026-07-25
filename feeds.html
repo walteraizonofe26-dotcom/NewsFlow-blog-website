@@ -4,33 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DailyNewsHub | Continuous Live Feeds</title>
-    <link rel="stylesheet" href="feeds.css">
-</head>
+     <link rel="stylesheet" href="components/layout.css">
+    <link rel="stylesheet" href="css/feeds.css">
+   </head>
 <body>
-
-    <header class="site-header">
-        <div class="header-container">
-            <div class="site-logo">
-                <a href="home.html" class="logo-link">
-                    <span class="logo-text">Daily<span class="logo-accent">News</span>Hub</span>
-                </a>
-            </div>
-            <nav class="main-navigation" aria-label="Main Navigation">
-                <ul class="nav-links">
-                    <li><a href="home.html" class="nav-link">Home</a></li>
-                    <li><a href="feeds.html" class="nav-link active">Feeds</a></li>
-                    <li><a href="articles.html" class="nav-link">Articles</a></li>
-                </ul>
-            </nav>
-            <div class="mobile-menu-toggle">
-                <button type="button" class="menu-btn" aria-label="Toggle navigation menu">
-                    <span class="menu-icon-bar"></span>
-                    <span class="menu-icon-bar"></span>
-                    <span class="menu-icon-bar"></span>
-                </button>
-            </div>
-        </div>
-    </header>
+    
+    <div id="header-container"></div>
 
     <main class="site-main">
 
@@ -55,7 +34,6 @@
                         <button type="button" class="category-btn active" data-category="">All</button>
                         <button type="button" class="category-btn" data-category="technology">Technology</button>
                         <button type="button" class="category-btn" data-category="sports">Sports</button>
-                        <button type="button" class="category-btn" data-category="football">Football</button>
                         <button type="button" class="category-btn" data-category="business">Business</button>
                         <button type="button" class="category-btn" data-category="entertainment">Entertainment</button>
                         <button type="button" class="category-btn" data-category="science">Science</button>
@@ -71,7 +49,10 @@
                 
                 <div class="loading" id="feed-loading" style="display: none;"></div>
                 <div class="error-message" id="feed-error" style="display: none;"></div>
-                <div class="no-results" id="feed-no-results" style="display: none;">No articles found.</div>
+                <div class="no-results" id="feed-no-results" style="display: none;">
+                    <h2>No articles found.</h2>
+                    <p>Try another keyword or select a different category.</p>
+                </div>
 
                 <div class="articles-container"></div>
 
@@ -84,50 +65,9 @@
 
     </main>
 
-    <footer class="site-footer">
-        <div class="footer-top-wrapper">
-            <div class="footer-container">
-                <div class="footer-block footer-about">
-                    <h2 class="footer-logo">Daily<span class="logo-accent">News</span>Hub</h2>
-                    <p class="footer-about-text">An independent, advanced news curation ecosystem presenting verified, multi-perspective data points covering modern world events.</p>
-                </div>
-                <div class="footer-block footer-links">
-                    <h3 class="footer-block-title">Quick Links</h3>
-                    <nav class="footer-navigation" aria-label="Footer Quick Links Navigation">
-                        <ul class="footer-nav-list">
-                            <li><a href="home.html" class="footer-link">Home</a></li>
-                            <li><a href="feeds.html" class="footer-link">Feeds</a></li>
-                            <li><a href="articles.html" class="footer-link">Articles</a></li>
-                        </ul>
-                    </nav>
-                </div>
-                <div class="footer-block footer-legal">
-                    <h3 class="footer-block-title">Legal</h3>
-                    <nav class="footer-navigation" aria-label="Footer Legal Navigation">
-                        <ul class="footer-nav-list">
-                            <li><a href="#" class="footer-link">Privacy Policy</a></li>
-                            <li><a href="#" class="footer-link">Terms of Service</a></li>
-                        </ul>
-                    </nav>
-                </div>
-                <div class="footer-block footer-social">
-                    <h3 class="footer-block-title">Connect With Us</h3>
-                    <div class="social-links-wrapper">
-                        <a href="#" class="social-icon-link" aria-label="Follow us on Twitter">Twitter</a>
-                        <a href="#" class="social-icon-link" aria-label="Follow us on LinkedIn">LinkedIn</a>
-                        <a href="#" class="social-icon-link" aria-label="Follow us on Facebook">Facebook</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="footer-bottom-wrapper">
-            <div class="footer-container bottom-container">
-                <p class="copyright-text">&copy; 2026 DailyNewsHub Media Group. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
-</body>
-</html>
-    <script src="feeds.js"></script>
+    <div id="footer-container"></div>
+
+    <script defer src="components/layout.js"></script>
+    <script defer src="js/feeds.js"></script>
 </body>
 </html>
