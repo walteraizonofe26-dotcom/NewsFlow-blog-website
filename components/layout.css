@@ -28,6 +28,13 @@
     --transition-spring: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
+html,
+body{
+    width:100%;
+    max-width:100%;
+    overflow-x:hidden;
+}
+
 /* ==========================================================================
 Reset & Accessibility Foundations
    ========================================================================== */
@@ -341,22 +348,22 @@ button {
     z-index: 10;
 }
 
-.footer-top-wrapper {
-    max-width: var(--max-width);
-    margin: 0 auto;
-    padding: 6rem 2rem 4rem;
+.footer-top-wrapper{
+    width:100%;
+    max-width:1300px;
+    margin:0 auto;
+    padding:6rem 2rem 4rem;
 }
 
 .footer-container {
     display: grid;
     grid-template-columns: 2fr repeat(3, 1fr);
     gap: 4rem;
+    min-width: 0;
 }
 
 .footer-block {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
+   min-width: 0;
 }
 
 .footer-about-text {
@@ -596,12 +603,11 @@ button {
 
     .mobile-navigation {
         position: fixed;
-        /* Changed from absolute to fixed */
         top: var(--header-height);
-        left: 0;
-        right: 0;
-        margin: 0 auto;
-        width: calc(100% - 2rem);
+        left: 1rem;
+        right: 1rem;
+        margin: 0;
+        width: auto;
         max-width: var(--max-width);
         transform-origin: top center;
     }
