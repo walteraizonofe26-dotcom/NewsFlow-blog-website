@@ -326,7 +326,7 @@ const initHomePage = async () => {
 };
 
 history.scrollRestoration = "manual";
-window.scrollTo(0, 0); // Standard browser-supported behavior
+window.scrollTo(0, 0); 
 
 // Ignite System Pipeline Execution
 initHomePage();

@@ -137,7 +137,7 @@ const showEmptyState = () => {
  * @param {Object} article Raw item mapped dataset schema
  */
 const createArticleLayout = (article) => {
-    // Structural property configuration using optional chains & nullish coalescing
+
     const category = (article.category && article.category.length > 0) ? article.category[0] : TEXT_STRINGS.DEFAULT_CATEGORY;
     const source = article.source_id ?? TEXT_STRINGS.DEFAULT_SOURCE;
     const image = article.image_url ?? APP_CONFIG.FALLBACK_IMAGE;
@@ -272,6 +272,23 @@ const createArticleLayout = (article) => {
         primaryActionBtn.setAttribute("aria-disabled", "true");
     }
     actionLayoutWrapper.appendChild(primaryActionBtn);
+
+    // Back Button
+    const backButton = document.createElement("button");
+    backButton.className = "btn-action btn-action-secondary";
+    backButton.textContent = "← Back to previous page";
+
+    backButton.addEventListener("click", () => {
+        if (window.history.length > 1) {
+            window.history.back();
+        } else {
+            window.location.href = "home.html";
+        }
+    });
+
+    actionLayoutWrapper.appendChild(backButton);
+
+    articleContainer.appendChild(actionLayoutWrapper);
 
     if (rootTarget) {
         rootTarget.replaceChildren(articleContainer);

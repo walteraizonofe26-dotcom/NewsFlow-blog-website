@@ -22,13 +22,8 @@ async function loadLayout() {
         const headerContainer = document.getElementById("header-container");
         const footerContainer = document.getElementById("footer-container");
 
-        if (headerContainer) {
-            headerContainer.innerHTML = headerHTML;
-        }
-
-        if (footerContainer) {
-            footerContainer.innerHTML = footerHTML;
-        }
+        if (headerContainer) headerContainer.innerHTML = headerHTML;
+        if (footerContainer) footerContainer.innerHTML = footerHTML;
 
     } catch (error) {
         console.error("Layout Error:", error);
@@ -41,63 +36,70 @@ function initializeNavigation() {
 
     const menuButton = document.getElementById("menu-btn");
     const mobileNav = document.getElementById("mobile-nav");
+    const overlay = document.getElementById("nav-overlay");
 
-    if (!menuButton || !mobileNav){
+    if (!menuButton || !mobileNav || !overlay) {
         console.warn("Mobile menu elements not found");
         return;
-    } 
+    }
+
+    function openMenu() {
+        mobileNav.classList.add("is-open");
+        overlay.classList.add("is-open");
+        menuButton.classList.add("active");
+        menuButton.setAttribute("aria-expanded", "true");
+        document.body.classList.add("no-scroll"); 
+    }
+
+    function closeMenu() {
+        mobileNav.classList.remove("is-open");
+        overlay.classList.remove("is-open");
+        menuButton.classList.remove("active");
+        menuButton.setAttribute("aria-expanded", "false");
+        document.body.classList.remove("no-scroll");
+    }
 
     menuButton.addEventListener("click", () => {
-        const isOpen = mobileNav.classList.toggle("is-open");
-        menuButton.classList.toggle("active");
-        menuButton.setAttribute("aria-expanded", isOpen);
+        const isOpen = mobileNav.classList.contains("is-open");
+        isOpen ? closeMenu() : openMenu();
     });
 
-    const mobileLinks = mobileNav.querySelectorAll('.mobile-nav-link');
+    const mobileLinks = mobileNav.querySelectorAll(".mobile-nav-link");
     mobileLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            mobileNav.classList.remove("is-open");
-            menuButton.classList.remove("active");
-            menuButton.setAttribute("aria-expanded", "false");
-        });
+        link.addEventListener("click", closeMenu);
     });
 
-    
- window.addEventListener("resize", () => {
-    if (window.innerWidth > 768) {
-        const mobileNav = document.getElementById("mobile-nav");
-        const menuButton = document.getElementById("menu-btn");
-        
-        if (mobileNav && menuButton) {
-            mobileNav.classList.remove("is-open");
-            menuButton.classList.remove("active");
-            menuButton.setAttribute("aria-expanded", "false");
-        }
-    }
-});
+    overlay.addEventListener("click", closeMenu);
 
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && mobileNav.classList.contains("is-open")) {
+            closeMenu();
+        }
+    });
+
+    window.addEventListener("resize", () => {
+        if (window.innerWidth > 768) {
+            closeMenu();
+        }
+    });
 }
 
 function setActiveLink() {
 
-    const currentPage =
-        window.location.pathname.split("/").pop();
+    const currentPage = window.location.pathname.split("/").pop();
 
-    const navLinks =
-        document.querySelectorAll(".nav-link");
+      const navLinks = document.querySelectorAll(".nav-link");
 
     navLinks.forEach(link => {
-
         link.classList.remove("active");
 
         const href = link.getAttribute("href");
+        const linkPage = href ? href.split("/").pop() : "";
 
-        if (href === currentPage) {
+        if (linkPage === currentPage) {
             link.classList.add("active");
         }
-
     });
 
     document.body.style.visibility = "visible";
-
 }

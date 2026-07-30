@@ -1,48 +1,50 @@
+<header class="site-header">
+    <div class="header-container">
 
-    <!-- 1. HEADER SECTION -->
-    <header class="site-header">
-        <div class="header-container">
-            <div class="site-logo">
-                <a href="index.html" class="logo-link">
-                    <span class="logo-text">Daily<span class="logo-accent">News</span>Hub</span>
-                </a>
-            </div>
-            
-            <nav class="main-navigation" aria-label="Main Navigation">
-                <ul class="nav-links">
-                    <li><a href="../index.html" class="nav-link">Home</a></li>
-                    <li><a href="../feeds.html" class="nav-link">Feeds</a></li>
-                    <!-- <li><a href="articles.html" class="nav-link">Articles</a></li> -->
-                </ul>
-            </nav>
+        <!-- Logo -->
+        <div class="site-logo">
+            <a href="index.html" class="logo-link">
+                <span class="logo-text">Daily<span class="logo-accent">News</span>Hub</span>
+            </a>
+        </div>
 
-            <!-- Mobile Navigation Panel -->
-        <div class="mobile-navigation" id="mobile-nav">
-             <ul class="mobile-nav-links">
+        <!-- Desktop Navigation -->
+        <nav class="main-navigation" role="navigation" aria-label="Main Navigation">
+            <ul class="nav-links">
+                <li><a href="../index.html" class="nav-link">Home</a></li>
+                <li><a href="../feeds.html" class="nav-link">Feeds</a></li>
+            </ul>
+        </nav>
+
+        <div class="mobile-menu-toggle">
+            <button type="button" id="menu-btn" class="menu-btn" aria-label="Open navigation menu"
+                aria-controls="mobile-nav" aria-expanded="false">
+                <span class="menu-line"></span>
+                <span class="menu-line"></span>
+                <span class="menu-line"></span>
+            </button>
+        </div>
+    </div>
+
+    <div class="nav-overlay" id="nav-overlay"></div>
+
+    <nav class="mobile-navigation" id="mobile-nav" role="navigation" aria-label="Mobile Navigation">
+
+        <div class="mobile-nav-header">
+            <span class="mobile-nav-logo">Daily<span class="logo-accent">News</span>Hub</span>
+        </div>
+
+        <ul class="mobile-nav-links">
             <li class="mobile-nav-item">
-            <a href="../index.html" class="mobile-nav-link">Home</a>
+                <a href="../index.html" class="mobile-nav-link nav-link">Home</a>
             </li>
             <li class="mobile-nav-item">
-            <a href="../feeds.html" class="mobile-nav-link">Feeds</a>
+                <a href="../feeds.html" class="mobile-nav-link nav-link">Feeds</a>
             </li>
         </ul>
+
+        <div class="mobile-nav-footer">
+            <span class="mobile-nav-version">Version 1.0</span>
         </div>
-
-            <!-- Responsive Mobile Menu Trigger -->
-           <div class="mobile-menu-toggle">
-    <button
-        type="button"
-        id="menu-btn"
-        class="menu-btn"
-        aria-label="Open navigation menu"
-        aria-controls="mobile-nav"
-        aria-expanded="false">
-
-        <span class="menu-line"></span>
-        <span class="menu-line"></span>
-        <span class="menu-line"></span>
-
-    </button>
-</div>
-        </div>
-    </header>
+    </nav>
+</header>

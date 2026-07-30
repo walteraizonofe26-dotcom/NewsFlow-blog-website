@@ -1,5 +1,4 @@
 :root {
-    /* Color Palette */
     --bg-color: #0F172A;
     --surface-color: #1E293B;
     --surface-rgb: 30, 41, 59;
@@ -11,33 +10,29 @@
     --text-muted: #CBD5E1;
     --text-dimmed: #94A3B8;
 
-    /* Structural Variables */
-    --header-height: 4.5rem;
+    --header-height: 70px;
     --max-width: 1300px;
     --radius-md: 12px;
     --radius-lg: 16px;
+    --offcanvas-width: min(80vw, 340px);
 
-    /* Shadow Architectures */
     --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
     --shadow-md: 0 12px 30px -10px rgba(0, 0, 0, 0.4);
     --shadow-lg: 0 20px 40px -15px rgba(0, 0, 0, 0.6);
 
-    /* Systemic Transitions */
     --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-spring: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    --transition-offcanvas: 320ms cubic-bezier(0.16, 1, 0.3, 1);
+    --transition-overlay: 250ms ease;
 }
 
 html,
-body{
-    width:100%;
-    max-width:100%;
-    overflow-x:hidden;
+body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
 }
 
-/* ==========================================================================
-Reset & Accessibility Foundations
-   ========================================================================== */
 *,
 *::before,
 *::after {
@@ -48,6 +43,10 @@ Reset & Accessibility Foundations
 
 body {
     visibility: hidden;
+}
+
+body.no-scroll {
+    overflow: hidden;
 }
 
 ul,
@@ -69,13 +68,11 @@ button {
     outline: none;
 }
 
-/* Accessible Global Focus States */
 :focus-visible {
     outline: 2px solid var(--accent-blue);
     outline-offset: 4px;
 }
 
-/* Accessibility Reduced Motion Handling */
 @media (prefers-reduced-motion: reduce) {
 
     *,
@@ -91,9 +88,6 @@ button {
     }
 }
 
-/* ==========================================================================
- Header & Shell Shell Infrastructure
-   ========================================================================== */
 .site-header {
     position: sticky;
     top: 0;
@@ -101,15 +95,15 @@ button {
     right: 0;
     z-index: 1000;
     height: var(--header-height);
-    background: rgba(15, 23, 42, 0.75);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    background: rgba(15, 23, 42, 0.72);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
     border-bottom: 1px solid rgba(51, 65, 85, 0.5);
-    transition: background var(--transition-normal), border var(--transition-normal), transform var(--transition-normal);
+    transition: background var(--transition-normal), border var(--transition-normal);
 }
 
 .site-header.scrolled {
-    background: rgba(15, 23, 42, 0.9);
+    background: rgba(15, 23, 42, 0.92);
     border-bottom: 1px solid var(--border-color);
     box-shadow: var(--shadow-sm);
 }
@@ -131,7 +125,7 @@ button {
 }
 
 .logo-link {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     font-weight: 800;
     letter-spacing: -0.03em;
     color: var(--text-primary);
@@ -149,12 +143,8 @@ button {
 
 .logo-link:hover {
     opacity: 0.9;
-    transform: scale(0.99);
 }
 
-/* ==========================================================================
-   Desktop Navigation
-   ========================================================================== */
 .main-navigation {
     display: block;
     height: 100%;
@@ -163,7 +153,7 @@ button {
 .nav-links {
     display: flex;
     align-items: center;
-    gap: 2.5rem;
+    gap: 2.25rem;
     height: 100%;
 }
 
@@ -177,7 +167,7 @@ button {
     font-size: 0.95rem;
     font-weight: 500;
     color: var(--text-muted);
-    padding: 0.5rem 0;
+    padding: 0.4rem 0;
     position: relative;
     letter-spacing: -0.01em;
     display: inline-flex;
@@ -189,7 +179,7 @@ button {
 .nav-link::after {
     content: '';
     position: absolute;
-    bottom: calc(var(--header-height) * -0.05);
+    bottom: 22%;
     left: 0;
     width: 100%;
     height: 2px;
@@ -209,7 +199,6 @@ button {
     transform-origin: left;
 }
 
-/* Active Link State Matrix */
 .nav-link.active {
     color: var(--text-primary);
     font-weight: 600;
@@ -221,14 +210,11 @@ button {
     background: var(--secondary-blue);
 }
 
-/* ==========================================================================
-   Hamburger Menu Button Component
-   ========================================================================== */
 .mobile-menu-toggle {
     display: none;
     align-items: center;
     justify-content: center;
-    z-index: 1010;
+    z-index: 1300;
 }
 
 .menu-btn {
@@ -243,6 +229,7 @@ button {
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.05);
     transition: background var(--transition-fast), border var(--transition-fast);
+    position: relative;
 }
 
 .menu-btn:hover {
@@ -258,61 +245,85 @@ button {
     transition: transform var(--transition-normal), opacity var(--transition-normal);
 }
 
-/* Hamburger Transforming States Controlled via layout.js menuState */
-.menu-btn[aria-expanded="true"] .menu-line:nth-child(1) {
+.menu-btn.active .menu-line:nth-child(1) {
     transform: translateY(8px) rotate(45deg);
 }
 
-.menu-btn[aria-expanded="true"] .menu-line:nth-child(2) {
+.menu-btn.active .menu-line:nth-child(2) {
     opacity: 0;
     transform: scaleX(0);
 }
 
-.menu-btn[aria-expanded="true"] .menu-line:nth-child(3) {
+.menu-btn.active .menu-line:nth-child(3) {
     transform: translateY(-8px) rotate(-45deg);
 }
 
-/* ==========================================================================
-   Mobile Navigation Panel
-   ========================================================================== */
-.mobile-navigation {
-    position: absolute;
-    top: calc(var(--header-height) + 0.75rem);
-    left: 1rem;
-    right: 1rem;
-    background: rgba(30, 41, 59, 0.95);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 16px;
-    padding: 1.5rem;
-    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.6);
+.nav-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(2, 6, 15, 0.6);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity var(--transition-overlay), visibility var(--transition-overlay);
+    z-index: 1100;
+}
+
+.nav-overlay.is-open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
 }
 
 .mobile-navigation {
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-20px) scale(0.95);
-    max-height: 0;
-    overflow: hidden;
-    transition:
-        opacity var(--transition-normal),
-        visibility var(--transition-normal),
-        transform var(--transition-normal),
-        max-height var(--transition-normal);
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    height: 100dvh; 
+    width: var(--offcanvas-width);
+    max-width: 340px;
+
+    background: rgba(15, 23, 42, 0.98);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-left: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: -20px 0 40px -15px rgba(0, 0, 0, 0.6);
+
+    display: flex;
+    flex-direction: column;
+
+    transform: translateX(100%);
+    transition: transform var(--transition-offcanvas);
+    z-index: 1200;
+
+    padding: 1.5rem 1.5rem 2rem;
 }
 
 .mobile-navigation.is-open {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0) scale(1);
-    max-height: 400px;
+    transform: translateX(0);
+}
+
+.mobile-nav-header {
+    padding-bottom: 1.5rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.mobile-nav-logo {
+    font-size: 1.15rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
 }
 
 .mobile-nav-links {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
-    width: 100%; 
+    gap: 0.35rem;
+    flex: 1;
 }
 
 .mobile-nav-item {
@@ -320,26 +331,39 @@ button {
 }
 
 .mobile-nav-link {
-    padding: 1rem 1.25rem;
-    font-size: 1.1rem;
+    display: block;
+    width: 100%;
+    padding: 1rem 1rem;
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: var(--text-muted);
     border-radius: 12px;
+    transition: background var(--transition-fast), color var(--transition-fast);
 }
 
 .mobile-nav-link:hover {
-    background: rgba(37, 99, 235, 0.15);
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary);
 }
 
 .mobile-nav-link.active {
     color: var(--text-primary);
-    background: linear-gradient(135deg, rgba(37, 99, 235, 0.15), rgba(59, 130, 246, 0.05));
-    border-color: rgba(37, 99, 235, 0.25);
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.18), rgba(59, 130, 246, 0.06));
     font-weight: 600;
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
-/* ==========================================================================
-   Footer Architectural Layout
-   ========================================================================== */
+.mobile-nav-footer {
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.mobile-nav-version {
+    font-size: 0.8rem;
+    color: var(--text-dimmed);
+    letter-spacing: 0.03em;
+}
+
 .site-footer {
     background-color: #0B0F19;
     border-top: 1px solid var(--border-color);
@@ -348,11 +372,11 @@ button {
     z-index: 10;
 }
 
-.footer-top-wrapper{
-    width:100%;
-    max-width:1300px;
-    margin:0 auto;
-    padding:6rem 2rem 4rem;
+.footer-top-wrapper {
+    width: 100%;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 6rem 2rem 4rem;
 }
 
 .footer-container {
@@ -363,7 +387,10 @@ button {
 }
 
 .footer-block {
-   min-width: 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
 }
 
 .footer-about-text {
@@ -400,22 +427,21 @@ button {
     transform: translateX(4px);
 }
 
-/* ==========================================================================
-   Footer Social Modules
-   ========================================================================== */
 .social-links-wrapper {
     display: flex;
     flex-direction: column;
-    gap: 0.85rem;
-    max-width: 200px;
+    gap: 0.6rem;
+    max-width: 100%;
+    width: 100%;
+    min-width: 0;
 }
 
 .social-icon-link {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    padding: 0.65rem 1.2rem;
-    font-size: 0.9rem;
+    padding: 0.5rem 0.9rem;
+    font-size: 0.8rem;
     font-weight: 500;
     color: var(--text-muted);
     background-color: var(--surface-color);
@@ -427,6 +453,9 @@ button {
         border-color var(--transition-fast),
         box-shadow var(--transition-fast),
         color var(--transition-fast);
+    width: 100%;
+    min-width: 0;
+    white-space: nowrap;
 }
 
 .social-icon-link:hover {
@@ -437,7 +466,6 @@ button {
     box-shadow: 0 6px 20px rgba(59, 130, 246, 0.2);
 }
 
-/* Footer Bottom Strip Components */
 .footer-bottom-wrapper {
     max-width: var(--max-width);
     margin: 0 auto;
@@ -455,29 +483,14 @@ button {
     letter-spacing: 0.01em;
 }
 
-/* ==========================================================================
-   Global Layout Animations
-   ========================================================================== */
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 @keyframes slideDown {
-    from {
-        opacity: 0;
-        transform: translateY(-16px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(-16px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 .animate-fade-in {
@@ -488,11 +501,6 @@ button {
     animation: slideDown var(--transition-normal) forwards;
 }
 
-/* ==========================================================================
-   Responsive Adaptations
-   ========================================================================== */
-
-/* Laptop Grid Optimizations */
 @media (max-width: 1200px) {
     .footer-container {
         gap: 2.5rem;
@@ -500,7 +508,6 @@ button {
     }
 }
 
-/* Medium Laptop Interventions */
 @media (max-width: 992px) {
     .footer-container {
         grid-template-columns: repeat(2, 1fr);
@@ -516,23 +523,29 @@ button {
     }
 
     .social-links-wrapper {
-        flex-direction: row;
+        flex-direction: column;
         flex-wrap: wrap;
         max-width: 100%;
+        width: 100%;
     }
 
     .social-icon-link {
-        flex: 1 1 calc(50% - 0.5rem);
-        justify-content: center;
+        width: 100%;
+        flex: none;
     }
 }
 
-/* Tablet Layout Inversion Layer */
-@media (max-width: 768px) {
+@media (max-width: 900px) {
+    .nav-links {
+        gap: 1.5rem;
+    }
+
     .header-container {
         padding: 0 1.5rem;
     }
+}
 
+@media (max-width: 768px) {
     .main-navigation {
         display: none;
     }
@@ -542,10 +555,9 @@ button {
     }
 }
 
-/* Mobile Screen Matrix Rules */
 @media (max-width: 576px) {
     :root {
-        --header-height: 4rem;
+        --header-height: 64px;
     }
 
     .footer-top-wrapper {
@@ -570,15 +582,13 @@ button {
     }
 
     .mobile-navigation {
-        left: 1rem;
-        right: 1rem;
+        width: 85vw; 
     }
 }
 
-/* Micro Device Baseline Optimizations */
 @media (max-width: 400px) {
     .logo-link {
-        font-size: 1.3rem;
+        font-size: 1.25rem;
     }
 
     .menu-btn {
@@ -587,28 +597,7 @@ button {
     }
 
     .mobile-nav-link {
-        padding: 1rem 1.25rem;
-        font-size: 1.1rem;
-        border-radius: 12px;
-    }
-}
-
-/* Ensure mobile navigation is properly positioned */
-@media (max-width: 768px) {
-    .mobile-menu-toggle {
-        display: flex;
-        position: relative;
-        z-index: 1010;
-    }
-
-    .mobile-navigation {
-        position: fixed;
-        top: var(--header-height);
-        left: 1rem;
-        right: 1rem;
-        margin: 0;
-        width: auto;
-        max-width: var(--max-width);
-        transform-origin: top center;
+        padding: 0.9rem 1rem;
+        font-size: 1rem;
     }
 }
